@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="m-canvas" width="600" height="400"></canvas>
+
+    <script>
+
+        let log = console.log.bind(console)
+
+
+        //封装, 一个挡板对象,pannel
+        var Pannel = function () {
+            var image = imageFromPath('./paddle.png')
+            var o = {
+                image: image,
+                x: 300,
+                y: 300,
+                speed: 10,
+            }
+            //挡板的左右移动
+            o.leftMove = function () {
+                o.x -= o.speed
+            }
+            o.rightMove = function () {
+                o.x += o.speed
+            }
+            //判断球是否和挡板相撞,也就是判断两个矩形是否相交 , 如果相撞,返回true,否则返回false
+            o.collide = function(ball){
+                if(ball.x>o.x && ball.x < o.x+o.image.width){
+                    if(ball.y+ball.image.height> o.y ){
+                        log('相撞')
+                        log(o.y,ball.y)
+                        return true
+                    }
+                }
+                return false
+            }
+            return o
+        }
+        var Ball = function () {
+            var image = imageFromPath('./ball.png')
+            var o = {
+                image: image,
+                x: 300,
+                y: 250,
+                speedX: 15,
+                speedY: 15,
+                fired: false,
+            }
+            o.move = function () {
+                if (o.fired) {
+                    if (o.x < 0 || o.x > 600) {
+                        o.speedX *= -1
+                    }
+                    if (o.y < 0 || o.y > 400) {
+                        o.speedY *= -1
+                    }
+                    o.x += o.speedX
+                    o.y += o.speedY
+                }
+            }
+            o.fire = function () {
+                log('11')
+                o.fired = true
+            }
+
+            return o
+        }
+
+
+        //封装一个创建image 的方法
+        var imageFromPath = function (imageUrl) {
+            let image = new Image();
+            image.src = imageUrl
+            return image
+        }
+
+
+        //创建一个 g 游戏对象 , 他有 canvas , 有画图方法draw , 
+        var guaGame = function () {
+            var g = {
+                keydowns: {},
+                active: {},
+            }
+            //创建一个canvas
+
+            var canvas = document.getElementById('m-canvas');
+            var ctx = canvas.getContext('2d');
+            g.canvas = canvas
+            g.ctx = ctx
+
+            //draw
+            g.drawImage = function (guaImage) {
+                g.ctx.drawImage(guaImage.image, guaImage.x, guaImage.y)
+            }
+            //按下按键,启动事件
+            window.addEventListener('keydown', function (event) {
+                g.keydowns[event.key] = true;
+            })
+            window.addEventListener('keyup', function (event) {
+                g.keydowns[event.key] = false;
+            })
+
+            //功能是,给某一个按键注册一个函数
+            g.registerAction = function (key, callback) {
+                g.active[key] = callback
+            }
+            setInterval(function () {
+                var active = Object.keys(g.active)
+                //循环监听被注册事件的按键,如果按键被按下,执行回调函数
+                for (var i = 0; i < active.length; i++) {
+                    var key = active[i];
+                    if (g.keydowns[key]) {
+                        g.active[key]()
+                    }
+                }
+
+                g.update()  
+                //在该计时器里面,最后是不断的清空画布,和画图, 
+                //所以在pannel对象里面的左右移动的方法里面,只需要更改image的位置就可以了
+                g.ctx.clearRect(0, 0, 600, 400);
+                g.draw()
+            }, 1000 / 30)
+
+            return g
+        }
+
+        //来一个主函数 
+        var __main = function () {
+            //game 对象
+            var game = guaGame();
+            // var image = imageFromPath('./paddle.png')
+            var pannel = Pannel();
+            var ball = Ball()
+
+            //给按键注册事件,按下d , 挡板右移动
+            game.registerAction('d', function () {
+                pannel.rightMove()
+            })
+            //给按键注册事件,按下a , 挡板左移动
+            game.registerAction('a', function () {
+                pannel.leftMove()
+            })
+            game.registerAction('f', function () {
+                ball.fire()
+            })
+
+
+            game.update = function () {
+                ball.move()
+                //如果相撞,让ball的速度取反
+                if(pannel.collide(ball)){
+                    ball.speedY*=-1
+                }
+                
+            }
+            // 画图
+            game.draw = function () {
+                game.drawImage(pannel)
+                game.drawImage(ball)
+            }
+
+
+        }
+
+        __main()
+    </script>
+</body>
+
+</html>
