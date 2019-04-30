@@ -1,13 +1,13 @@
   //封装一个球
-  var Ball = function () {
-    var image = imageFromPath('./ball.png')
+  var Ball = function (game) {
+    var image = game.imagesByName('ball')
     var o = {
-        image: image,
         x: 300,
         y: 250,
         speedX: 5,
         speedY: 5,
         fired: false,
+        ...image
     }
     o.move = function () {
         if (o.fired) {
@@ -24,10 +24,5 @@
     o.fire = function () {
         o.fired = true
     }
-    
-    // o.speedContral = function(speed){
-    //     o.speedX+= Math.ceil(speed/10) 
-    //     o.speedY+= Math.ceil(speed/10) 
-    // }
     return o
 }

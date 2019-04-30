@@ -7,8 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
         canvas {
             border: 1px solid black;
+            margin: 20px;
         }
     </style>
 </head>
@@ -19,13 +24,21 @@
     <hr>
     <input type="range" id="id-speed-contral" value="1">
 
+    <!-- 工具文件 -->
     <script src="./utils.js"></script>
-    <script src="./ball.js"></script>
-    <script src="./block.js"></script>
-    <script src="./pannel.js"></script>
-    <script src="./guagame.js"></script>
+    <!-- guagame文件 -->
+    <script src="./guagame/guagame.js"></script>
+    <script src="./guagame/ball.js"></script>
+    <script src="./guagame/block.js"></script>
+    <script src="./guagame/pannel.js"></script>
+    <!-- 场景文件 -->
+    <script src="./scene/titleScene.js"></script>
+    <script src="./scene/overScene.js"></script>
+    <script src="./scene/scene.js"></script>
+    <!-- 数据文件 -->
     <script src="./level.js"></script>
-    <script src="main.js">
+    <!-- 主文件 -->
+    <script src="./main.js">
     </script>
 </body>
 

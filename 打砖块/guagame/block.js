@@ -1,15 +1,16 @@
   //封装一个砖块 , position 是传入的参数,代表了level里每一关卡的一个成员
-  var Block = function (position) {
+  var Block = function (position,game) {
       var p = position;
-    var image = imageFromPath('./block2.png')
+    // var image = imageFromPath('./block.png')
+    var image = game.imagesByName('block')
     var o = {
-        image: image,
         x: p[0],
         y: p[1],
-        h: 15,
-        w: 100,
+        // h: 15,
+        // w: 100,
         live: true,
-        health: p[2] || 1
+        health: p[2] || 1,
+        ...image,
     }
     o.kill = function () {
         o.health--
