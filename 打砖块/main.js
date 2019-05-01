@@ -19,7 +19,7 @@ var enableDebugMode = function (enable) {
     //控制小球的速度
     document.getElementById('id-speed-contral').addEventListener('input', function (event) {
         window.fps = Number(this.value)
-        log(fps)
+        // log(fps)
     })
 
 }
@@ -35,9 +35,10 @@ var __main = function () {
     }
 
     //game 对象
-    var game = guaGame(30, images, function (game) {
-        var sceneBegin = SceneBegin(game)
-        game.replaceScene(sceneBegin)
+    var game = new GuagameScene(30, images, function (game) {
+        var titleScene = new TitleScene(game)
+        titleScene.test()
+        game.replaceScene(titleScene)
         // var pannel = Pannel(game);
         // var ball = Ball(game)
         // // 判断点是否在球里面
