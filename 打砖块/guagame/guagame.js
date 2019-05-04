@@ -35,21 +35,25 @@ class GuagameScene {
             this.run(runcallback);
         });
     }
-
+    //画图片
     drawImage(guaImage) {
         this.ctx.drawImage(guaImage.image, guaImage.x, guaImage.y);
     }
+    //给按键注册事件
     registerAction(key, callback) {
         this.active[key] = callback;
     }
+    //画分数
     drawScore(x, y, fontSize='35',color='red') {
         this.ctx.font = fontSize + "px serif";
         this.ctx.fillStyle = color;
         this.ctx.fillText('分数: ' + this.score, x, y);
     }
+    //更换场景
     replaceScene(scene) {
         this.scene = scene;
     }
+    //获取图片信息
     imagesByName(name) {
         var img = this.images[name];
         var img = {

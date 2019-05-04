@@ -1,4 +1,4 @@
-   //封装, 一个挡板对象,pannel
+   //封装, 一个挡板对象,pannel ,具有挡板的属性, 左右移动的方法, 判断与球相交的方法
    var Pannel = function (game) {
     // var image = imageFromPath('./paddle.png')
     var image = game.imagesByName('pannel')

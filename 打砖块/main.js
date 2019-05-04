@@ -96,12 +96,7 @@ var __main = function () {
 
         //更新函数是在定时器里面,会不断的被执行
         game.update = function (over) {
-            if (over) {
-                log('over')
-                overScene.update()
-                overScene.draw()
-                return
-            }
+           
             game.scene.update()
             // if (window.pause) {
             //     return
