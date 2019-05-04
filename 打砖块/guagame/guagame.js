@@ -25,9 +25,9 @@ class GuagameScene {
         var names = Object.keys(images);
         var proArr = [];
         names.forEach((item) => {
-            var pro = preloadImage(images[item]);
-            proArr.push(pro);
-            pro.then((img) => {
+            var opromise = preloadImage(images[item]);
+            proArr.push(opromise);
+            opromise.then((img) => {
                 this.images[item] = img;
             });
         });
@@ -63,7 +63,12 @@ class GuagameScene {
         };
         return img;
     }
-
+    update () {
+        this.scene.update()
+    }
+    draw () {
+        this.scene.draw()
+    }
     moveloop() {
         var active = Object.keys(this.active);
         //循环监听被注册事件的按键,如果按键被按下,执行回调函数

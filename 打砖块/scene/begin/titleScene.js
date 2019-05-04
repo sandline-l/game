@@ -18,9 +18,7 @@ class TitleScene extends GuaScene {
         this.game.ctx.font = "40px serif";
         this.game.ctx.fillText('按 b 键开始游戏', 200, 150);
     }
-    test(){
-        // log(this.game)
-    }
+   
 }
 
 //重构后, 定义一个类, 由该类来创建一个场景对象,
