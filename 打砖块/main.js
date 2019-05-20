@@ -34,7 +34,7 @@ var __main = function () {
         pannel: './img/paddle.png'
     }
     //game 对象
-    var game = new GuagameScene(30, images, function (game) {
+    var game =GuagameScene.instance(30, images, function (game) {
         var titleScene = new TitleScene(game)
         game.replaceScene(titleScene)
        

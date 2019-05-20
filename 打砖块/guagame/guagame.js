@@ -35,6 +35,11 @@ class GuagameScene {
             this.run(runcallback);
         });
     }
+    //一个类的静态方法, 实现单例模式 
+    static instance(...arg){
+        this.i = this.i || new this(...arg)
+        return this.i
+    }
     //画图片
     drawImage(guaImage) {
         this.ctx.drawImage(guaImage.image, guaImage.x, guaImage.y);
@@ -64,10 +69,10 @@ class GuagameScene {
         return img;
     }
     update () {
-        this.scene.update()
+        this.scene.update && this.scene.update()
     }
     draw () {
-        this.scene.draw()
+        this.scene.draw && this.scene.draw()
     }
     moveloop() {
         var active = Object.keys(this.active);
